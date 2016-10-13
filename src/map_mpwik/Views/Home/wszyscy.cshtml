@@ -1,0 +1,56 @@
+﻿@model IEnumerable<map_mpwik.models.kligocode>
+@{
+    ViewBag.Title = "Lista klientów na mapie";
+}
+<h2>Lista klientów mapie</h2>
+<p>Ilość rekordow: @Model.Count()</p>
+@using (Html.BeginForm("Wszyscy", "Home", FormMethod.Get))
+{
+    <b>Wyszukiwanie w/g kryteriów: </b>
+    @Html.RadioButton("option", "Nazwisko",new {@checked="checked"})<text>Nazwisko</text>
+    @Html.RadioButton("option", "Adres") <text>Adres</text>
+    
+    @Html.TextBox("search")
+    <input type="submit" name="submit" value="Szukaj" />
+    <div class="container">
+        <table class="table-hover table">
+            <thead>
+                <tr>
+                    <th>Nr id</th>
+                    <th>Nazwa klienta</th>
+                    <th>Adres</th>
+                    <th>Długość</th>
+                    <th>Szerokość</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("klientind","Home",new { id= @item.nr_id })">@item.nr_id</a>
+                        </td>
+
+                        <td>
+                            <b>
+                                @item.imie
+                            </b>
+                        </td>
+                        <td>
+                            @item.adres
+                        </td>
+                        <td>
+                            @item.lat
+                        </td>
+                        <td>
+                            @item.longi
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@section scripts{
+
+}

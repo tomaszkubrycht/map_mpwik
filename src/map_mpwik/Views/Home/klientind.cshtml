@@ -1,0 +1,64 @@
+﻿@model IEnumerable<map_mpwik.models.kligocode>
+@ViewData["Title"];
+<link href="~/css/leaflet.css" rel="stylesheet" />
+<link href="~/lib/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet" />
+<link href="~/lib/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet" />
+<link href="~/lib/leaflet_minimap/Control.MiniMap.min.css" rel="stylesheet" />
+<link href="~/lib/Leaflet_mousepos/L.Control.MousePosition.css" rel="stylesheet" />
+<link href="~/lib/L.Control.Credits-master/dist/leaflet-control-credits.css" rel="stylesheet" />
+<link href="~/lib/Leaflet.TileLegend-master/Leaflet.TileLegend.css" rel="stylesheet" />
+<link href="~/lib/Leaflet.draw-master/dist/leaflet.draw.css" rel="stylesheet" />
+
+<style>
+    #map {
+        height: 85vh;
+        width: auto;
+        /*border-radius: 25px;
+        margin-top: 10px;
+        webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);*/
+    }
+    /*#map, #pano {
+        float: left;
+        height: 100%;
+        width: 45%;
+      }*/
+</style>
+
+<div id="map"></div>
+@foreach (var item in Model)
+{
+<div>@item.nr_id</div>
+<div>@item.adres</div>
+}
+<div id="loading">Load ...</div>
+
+@section scripts{
+<script src="~/js/leaflet-0.7.3.js"></script>
+<script src="~/lib/Leaflet_mousepos/L.Control.MousePosition.js"></script>
+<script src="~/js/fuse.min.js"></script>
+<script src="~/js/leaflet.fusesearch.js"></script>
+<script src="~/lib/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+<script src="~/lib/leaflet_minimap/Control.MiniMap.min.js"></script>
+<script src="~/lib/L.Control.Credits-master/dist/leaflet-control-credits-src.js"></script>
+<script src="~/lib/Leaflet.TileLegend-master/Leaflet.TileLegend.js"></script>
+<script src="~/lib/Leaflet.draw-master/dist/leaflet.draw.js"></script>
+
+            @foreach (var item in Model)
+            {
+                <script>
+                var id = @item.nr_id;
+                var adres = '@item.adres';
+                var nazwisko = '@item.imie';
+                var lat = '@item.lat';
+                var lon = '@item.longi';
+               </script>
+            };
+<script src="~/js/map_tk.js"></script>
+<script src="~/js/getdataind.js"></script>
+<script>
+    //map.addLayer(markery);
+    </script>
+}
+

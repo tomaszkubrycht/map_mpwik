@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/css/leaflet.css" rel="stylesheet" />
+<link href="~/lib/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet" />
+<link href="~/lib/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet" />
+<link href="~/lib/leaflet_minimap/Control.MiniMap.min.css" rel="stylesheet" />
+<link href="~/lib/Leaflet_mousepos/L.Control.MousePosition.css" rel="stylesheet" />
+<link href="~/lib/L.Control.Credits-master/dist/leaflet-control-credits.css" rel="stylesheet" />
+<link href="~/lib/Leaflet.TileLegend-master/Leaflet.TileLegend.css" rel="stylesheet" />
+<link href="~/lib/Leaflet.draw-master/dist/leaflet.draw.css" rel="stylesheet" />
+<style>
+    #map {
+        height: 85vh;
+        width: auto;
+        /*border-radius: 25px;
+        margin-top: 10px;
+        webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);*/
+    }
+    /*#map, #pano {
+        float: left;
+        height: 100%;
+        width: 45%;
+      }*/
+
+</style>
+<link href="~/css/leaflet.fusesearch.css" rel="stylesheet" />
+<div id="pano"></div>
+<div id="map"></div>
+<div class="loading">Loading ...</div>
+
+@section scripts{
+    <script src="~/js/leaflet-0.7.3.js"></script>
+    <script src="~/lib/Leaflet_mousepos/L.Control.MousePosition.js"></script>
+    <script src="~/js/fuse.min.js"></script>
+    <script src="~/js/leaflet.fusesearch.js"></script>
+    <script src="~/lib/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+    <script src="~/lib/leaflet_minimap/Control.MiniMap.min.js"></script>
+    <script src="~/lib/L.Control.Credits-master/dist/leaflet-control-credits-src.js"></script>
+    <script src="~/lib/Leaflet.TileLegend-master/Leaflet.TileLegend.js"></script>
+<script src="~/lib/Leaflet.draw-master/dist/leaflet.draw.js"></script>
+    
+    <script>
+        var path = '@Url.Action("klienci")';
+        var link = '@Url.Action("KlientDetails","Home",new { id=12345})';
+    </script>
+    <script src="~/js/map_tk.js"></script>
+    <script src="~/js/getdata.js"></script>
+}

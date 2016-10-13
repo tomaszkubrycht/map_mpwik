@@ -1,0 +1,46 @@
+﻿@model IEnumerable<map_mpwik.models.puste>
+@{
+    ViewBag.Title = "Lista klientów nie ujetychna mapie";
+}
+<h2>Lista klientów nieujetych na mapie</h2>
+<p>Ilość rekordow: @Model.Count()</p>
+<div class="container">
+    <table class="table-hover table">
+        <thead>
+            <tr>
+                <th>Nr id</th>
+                <th>Nazwa klienta</th>
+                <th>Adres</th>
+                <th>Długość</th>
+                <th>Szerokość</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@item.nr_id">@item.nr_id</a>
+                    </td>
+                    <td>
+                        <b>
+                            @item.imie
+                        </b>
+                    </td>
+                    <td>
+                        @item.adres
+                    </td>
+                    <td>
+                        @item.lat
+                    </td>
+                    <td>
+                        @item.longi
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+
+}

@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/css/leaflet.css" rel="stylesheet" />
+<style>
+    #map {
+        height: 600px;
+        width: auto;
+        /*border-radius: 25px;
+        margin-top: 10px;
+        webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);*/
+    }
+</style>
+<link href="~/css/markcluster.css" rel="stylesheet" />
+<link href="~/css/leaflet.fusesearch.css" rel="stylesheet" />
+
+<div id="map">
+
+</div>
+<div class="loading">Loading ...</div>
+@section scripts{
+
+
+ <script src="~/js/leaflet-0.7.3.js"></script>
+  
+<script src="~/js/fuse.min.js"></script>
+<script src="~/js/leaflet.fusesearch.js"></script>
+
+      <script>
+          var popup = L.popup();
+          
+
+        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
+        var greenIcon = L.icon({iconUrl: 'images/marker-icon.png'});
+        var kastralna = L.tileLayer.wms("http://mapy.geoportal.gov.pl/wss/service/pub/guest/G2_GO_WMS/MapServer/WMSServer", {
+            transparent: true,
+            attribution: "NoRAD"
+        });
+        var podklad = L.tileLayer(osmUrl, { id: 'MapID', attribution: attrib });
+        var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+            maxZoom: 19,
+            subdomains:['mt0','mt1','mt2','mt3']
+        });
+        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            maxZoom: 19,
+            subdomains:['mt0','mt1','mt2','mt3']
+        });
+        var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+            maxZoom: 19,
+            subdomains:['mt0','mt1','mt2','mt3']
+        });
+
+        var baseMaps = {
+            "Plan miasta OPENSTREET": podklad,
+            "Google Streets": googleStreets,
+            "Google Satelite": googleSat,
+            "Google Teren": googleTerrain
+        }
+        var map = L.map('map');
+
+        var size = 10000;
+        var markers = [];
+        var markersList = [];
+
+        map.addLayer(podklad).setView([52.444635, 15.577912], 19);
+        L.control.layers(baseMaps).addTo(map);
+        var searchCtrl = L.control.fuseSearch()
+        searchCtrl.addTo(map);
+        
+            $('.loading').fadeIn(50, function () {
+                $.ajax({
+                    async:false,
+                    url: '@Url.Action("klienci")',
+                    timeout: 100000,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var dane = data;
+                        $.each(data, function (index, item) {
+                            var Wsp = [Number(item["lat"].trim()), Number(item["longi"].trim())];
+                            marker = L.marker(Wsp, { icon: greenIcon }).bindPopup("to jest" + item['imie'] + " " + item['adres']);
+                            
+                            markers.push(marker);
+                            
+                        });
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    },
+
+                });
+                
+                L.featureGroup(markers).addTo(map);
+            });
+            $('.loading').fadeOut(50);
+            //searchCtrl.indexFeatures(dane, ['imie', 'adres']);
+    </script>
+}
